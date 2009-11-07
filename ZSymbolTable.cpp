@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <hash_map>
+#include "data.h"
 #include "ZSymbolTable.h"
 
 
@@ -10,7 +11,7 @@ int main()
 {
 	ZVar zv1=1,zv2=2,zv3=3;
 	ZFun zf1=10,zf2=20,zf3=30;
-	ZSymbolTable zx;
+	ZSymbolTable<ZVar,ZFun> zx;
 	zx.InitScope();
 	zx.InitScope();
 	zx.currentScope->VarTable.Insert(&zv1,"zv1");
@@ -22,7 +23,7 @@ int main()
 	zx.FinScope();*/
 	zx.Jump(2);
 	ZVar* zv4=zx.getSymbol<ZVar>("zv2");
-	if(zv4==0)
+	if(zv4==NULL)
 		std::cout<<"Not Found\n";
 	else
 		std::cout<<"zv4="<<*zv4<<std::endl;

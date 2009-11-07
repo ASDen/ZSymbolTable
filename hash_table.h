@@ -1,5 +1,5 @@
 #include <google/dense_hash_map>
-#include "data.h"
+
 using google::dense_hash_map;
 using stdext::hash_compare;
 
@@ -37,24 +37,25 @@ public:
 
 };
 
+template <class ZHVar,class ZHFun>
 class ZScope
 {
 public:
-	ZHash<ZVar> VarTable;
-	ZHash<ZFun> FunTable;
+	ZHash<ZHVar> VarTable;
+	ZHash<ZHFun> FunTable;
 	int id;
 	ZScope* Parent;
 	
 	template<class T> T* lookup(ZChar * key){}
 
 	template<>
-	ZVar* lookup<ZVar>(ZChar * key)
+	ZHVar* lookup<ZHVar>(ZChar * key)
 	{
 		return VarTable.ZIHash[key];
 	}
 
 	template<>
-	ZFun* lookup<ZFun>(ZChar * key)
+	ZHFun* lookup<ZHFun>(ZChar * key)
 	{
 		return FunTable.ZIHash[key];
 	}

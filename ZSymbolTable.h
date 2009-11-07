@@ -1,9 +1,13 @@
 #include "hash_table.h"
+
+template <class ZHVar,class ZHFun>
 class ZSymbolTable
 {
 public:
-	dense_hash_map < int , ZScope*  > Scopes;
-	ZScope* currentScope;
+	typedef ZScope<ZHVar,ZHFun> ZTpScope;
+
+	dense_hash_map < int , ZTpScope*  > Scopes;
+	ZTpScope* currentScope;
 	int cid;
 
 	ZSymbolTable():cid(0)
@@ -14,7 +18,7 @@ public:
 
 	void InitScope()
 	{
-		ZScope* zs=new ZScope();
+		ZTpScope* zs=new ZTpScope();
 		Scopes[cid++]=zs;
 		zs->id;
 		zs->Parent=currentScope;
@@ -28,7 +32,7 @@ public:
 
 	void Jump(int id)
 	{
-		ZScope*js;
+		ZTpScope*js;
 		if((js = Scopes[id])!=NULL)
 			currentScope=js;
 	}
@@ -36,8 +40,7 @@ public:
 	template <class Data>
 	Data* getSymbol(ZChar * key)
 	{
-		ZScope* tmp=currentScope;
-		//Data def=Data();
+		ZTpScope* tmp=currentScope;
 		Data* ret;
 		while(tmp!=NULL)
 		{
