@@ -21,8 +21,14 @@ int main()
 	/*zx.FinScope();
 	zx.FinScope();
 	zx.FinScope();*/
-	zx.Jump(2);
-	ZVar* zv4=zx.getSymbol<ZVar>("zv2");
+	//zx.Jump(2);
+	ZVar* zv4=zx.getSymbol<ZVar>("zv1",true);
+	if(zv4==NULL)
+		std::cout<<"Not Found\n";
+	else
+		std::cout<<"zv4="<<*zv4<<std::endl;
+
+	zv4=zx.getSymbol<ZVar>("zv1",false);
 	if(zv4==NULL)
 		std::cout<<"Not Found\n";
 	else

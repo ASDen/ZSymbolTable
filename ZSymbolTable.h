@@ -1,3 +1,6 @@
+#ifndef _ZSYMTAB_H_
+#define _ZSYMTAB_H_
+
 #include "hash_table.h"
 
 template <class ZHVar,class ZHFun>
@@ -38,16 +41,20 @@ public:
 	}
 
 	template <class Data>
-	Data* getSymbol(ZChar * key)
+	Data* getSymbol(ZChar * key,bool rec)
 	{
-		ZTpScope* tmp=currentScope;
-		Data* ret;
-		while(tmp!=NULL)
+		ZTpScope* tmp=ZAlloc(ZTpScope,1);
+		tmp=currentScope;
+		Data* ret=0;
+		do
 		{
-			if((ret=tmp->lookup<Data>(key))!=NULL)
+			if((ret=tmp->lookup<Data>(key))!=0)
 				return ret;
 			tmp=tmp->Parent;
-		}
+		}while(rec && tmp!=NULL);
+
 		return ret;
 	}
 };
+
+#endif
