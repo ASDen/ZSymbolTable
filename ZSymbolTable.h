@@ -3,11 +3,11 @@
 
 #include "hash_table.h"
 
-template <class ZHVar,class ZHFun>
+template <class ZHVar>
 class ZSymbolTable
 {
 public:
-	typedef ZScope<ZHVar,ZHFun> ZTpScope;
+	typedef ZScope<ZHVar> ZTpScope;
 
 	dense_hash_map < int , ZTpScope*  > Scopes;
 	ZTpScope* currentScope;
@@ -17,13 +17,14 @@ public:
 	{
 		Scopes.set_empty_key(cid++);
 		currentScope=NULL;
+		InitScope();
 	}
 
 	void InitScope()
 	{
 		ZTpScope* zs=new ZTpScope();
 		Scopes[cid++]=zs;
-		zs->id;
+		zs->id=cid;
 		zs->Parent=currentScope;
 		currentScope=zs;
 	}
@@ -40,20 +41,24 @@ public:
 			currentScope=js;
 	}
 
-	template <class Data>
-	Data* getSymbol(ZChar * key,bool rec)
+	ZHVar* getSymbol(ZChar * key,bool rec)
 	{
 		ZTpScope* tmp=ZAlloc(ZTpScope,1);
 		tmp=currentScope;
-		Data* ret=0;
+		ZHVar* ret=0;
 		do
 		{
-			if((ret=tmp->lookup<Data>(key))!=0)
+			if((ret=tmp->lookup(key))!=0)
 				return ret;
 			tmp=tmp->Parent;
 		}while(rec && tmp!=NULL);
 
 		return ret;
+	}
+
+	void InsertSymbol(ZChar * key,ZHVar* var)
+	{
+		currentScope->VarTable.Insert(var,key);
 	}
 };
 

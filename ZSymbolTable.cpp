@@ -11,24 +11,24 @@ int main()
 {
 	ZVar zv1=1,zv2=2,zv3=3;
 	ZFun zf1=10,zf2=20,zf3=30;
-	ZSymbolTable<ZVar,ZFun> zx;
+	ZSymbolTable<ZVar> zx;
 	zx.InitScope();
 	zx.InitScope();
-	zx.currentScope->VarTable.Insert(&zv1,"zv1");
-	zx.currentScope->VarTable.Insert(&zv2,"zv2");
+	zx.InsertSymbol("zv1",&zv1);
+	zx.InsertSymbol("zv2",&zv2);
 	zx.InitScope();
 	zx.InitScope();
 	/*zx.FinScope();
 	zx.FinScope();
 	zx.FinScope();*/
 	//zx.Jump(2);
-	ZVar* zv4=zx.getSymbol<ZVar>("zv1",true);
+	ZVar* zv4=zx.getSymbol("zv1",true);
 	if(zv4==NULL)
 		std::cout<<"Not Found\n";
 	else
 		std::cout<<"zv4="<<*zv4<<std::endl;
 
-	zv4=zx.getSymbol<ZVar>("zv1",false);
+	zv4=zx.getSymbol("zv1",false);
 	if(zv4==NULL)
 		std::cout<<"Not Found\n";
 	else

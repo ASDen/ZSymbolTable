@@ -49,30 +49,20 @@ public:
 
 };
 
-template <class ZHVar,class ZHFun>
+template <class ZHVar>
 class ZScope
 {
 public:
-	ZHash<ZHVar> VarTable;
-	ZHash<ZHFun> FunTable;
 	int id;
-	ZScope<ZHVar,ZHFun>* Parent;
+	ZHash<ZHVar> VarTable;
+	ZScope<ZHVar>* Parent;
 	
-	template<class T> T* lookup(ZChar * key){}
-
-	template<>
-	ZHVar* lookup<ZHVar>(ZChar * key)
+	ZHVar* lookup(ZChar * key)
 	{
 		if(VarTable.ZIHash.find(key)==VarTable.ZIHash.end()) return NULL;
 		else return VarTable.ZIHash.find(key)->second;
 	}
 
-	template<>
-	ZHFun* lookup<ZHFun>(ZChar * key)
-	{
-		if(FunTable.ZIHash.find(key)==VarTable.ZIHash.end()) return NULL;
-		else return FunTable.ZIHash.find(key)->second;
-	}
 };
 
 #endif
