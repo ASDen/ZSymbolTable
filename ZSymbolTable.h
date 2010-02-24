@@ -29,6 +29,14 @@ public:
 		currentScope=zs;
 	}
 
+	void InitScope(ZSymbolTable<ZHVar> ZSymChild)
+	{
+		ZTpScope* zs=ZSymChild.Scopes[1];
+		Scopes[cid++]=zs;
+		zs->id=cid;
+		zs->Parent=currentScope;
+	}
+
 	void FinScope()
 	{
 		currentScope=currentScope->Parent;

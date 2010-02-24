@@ -1,8 +1,8 @@
 #ifndef _ZHASH_H_
 #define _ZHASH_H_
 
-#include "../ZTypes/ZTypes.h"
-
+//#include "../ZTypes/ZTypes.h"
+#include "../ZTypes/Zlang.h"
 #include <google/dense_hash_map>
 using google::dense_hash_map;
 using stdext::hash_compare;
